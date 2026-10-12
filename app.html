@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Devilish AI — the open-source devilish assistant</title>
+<meta name="description" content="Devilish AI: a free, open-source AI assistant with a devilish streak. Unlimited chat with a free account. Built by Abdel Rahman Abuzaid.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁</text></svg>">
+<style>
+:root{--bg:#0a0405;--panel:#140a0c;--panel2:#1c0e11;--line:#3a1418;--txt:#f3e8e8;--dim:#b08d8d;--a1:#ef4444;--a2:#f97316;--ok:#34d399}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(1200px 600px at 70% -10%,rgba(239,68,68,.14),transparent),radial-gradient(900px 500px at 5% 110%,rgba(249,115,22,.08),transparent)}
+a{color:var(--a1);text-decoration:none}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:14px;padding:14px 26px;border-bottom:1px solid var(--line);background:rgba(10,4,5,.78);backdrop-filter:blur(10px)}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--a1),var(--a2));display:grid;place-items:center;font-size:18px;flex:0 0 36px}
+.brand b{font-size:17px;font-weight:650}
+.brand b em{font-style:normal;background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .sub{font-size:12px;color:var(--dim)}
+nav{margin-left:auto;display:flex;gap:22px;font-size:14px}
+nav a{color:var(--dim)}nav a:hover{color:var(--txt)}
+#dot{width:8px;height:8px;border-radius:50%;background:#64748b;display:inline-block;margin-right:6px}
+#dot.on{background:var(--ok);box-shadow:0 0 8px rgba(52,211,153,.8)}
+@media(max-width:640px){nav{display:none}}
+section{max-width:980px;margin:0 auto;padding:34px 22px}
+.hero{padding:72px 22px 44px;text-align:center}
+.hero .kicker{display:inline-block;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--a1);border:1px solid var(--line);border-radius:999px;padding:7px 16px;background:rgba(34,211,238,.06);margin-bottom:22px}
+.hero h2{font-size:clamp(30px,5vw,50px);font-weight:700;line-height:1.15;letter-spacing:-.5px}
+.hero h2 em{font-style:normal;background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{max-width:640px;margin:18px auto 0;color:var(--dim);font-size:17px}
+.cta{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{border:0;border-radius:13px;padding:14px 26px;font-size:15.5px;font-weight:650;cursor:pointer}
+.btn.p{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04121a}
+.btn.s{background:var(--panel);border:1px solid var(--line);color:var(--txt)}
+.btn.s:hover{border-color:#2b6f8f}
+.stats{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 26px;min-width:150px}
+.stat b{display:block;font-size:26px;background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13px;color:var(--dim)}
+h3.sec{font-size:24px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+p.secd{color:var(--dim);font-size:14.5px;margin-bottom:20px}
+.chatbox{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+#chat{height:460px;overflow-y:auto;padding:20px}
+.msg{display:flex;gap:12px;margin-bottom:16px}
+.msg .av{flex:0 0 32px;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:15px}
+.msg.u .av{background:#1a2430}
+.msg.a .av{background:linear-gradient(135deg,var(--a1),var(--a2));color:#04121a;font-weight:700}
+.bubble{padding:12px 15px;border-radius:14px;max-width:calc(100% - 50px);word-wrap:break-word;overflow-wrap:anywhere}
+.msg.u .bubble{background:#152030;border:1px solid var(--line);border-top-left-radius:4px}
+.msg.a .bubble{background:var(--panel2);border:1px solid var(--line);border-top-left-radius:4px}
+.bubble .md h4{font-size:15px;margin:10px 0 4px;color:var(--a1)}
+.bubble .md ul,.bubble .md ol{margin:6px 0 6px 20px}
+.bubble .md li{margin:3px 0}
+.bubble .md p{margin:6px 0}
+.bubble .md b{color:#fff}
+.src{margin-top:10px;font-size:12.5px;color:var(--dim);border-top:1px dashed var(--line);padding-top:8px}
+.src b{color:var(--a1);font-weight:600}
+.typo span{display:inline-block;width:6px;height:6px;margin-right:4px;border-radius:50%;background:var(--a1);animation:bl 1.2s infinite}
+.typo span:nth-child(2){animation-delay:.2s}.typo span:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 0}
+.chip{font-size:13px;color:var(--dim);border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:7px 13px;cursor:pointer}
+.chip:hover{color:var(--txt);border-color:#2b6f8f}
+.inbar{display:flex;gap:10px;align-items:flex-end;padding:14px 16px 16px}
+#in{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:13px 15px;color:var(--txt);font:inherit;resize:none;outline:none;max-height:160px}
+#in:focus{border-color:#2b6f8f;box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+#send{background:linear-gradient(135deg,var(--a1),var(--a2));border:0;color:#04121a;font-weight:700;border-radius:14px;padding:13px 22px;cursor:pointer;font-size:15px}
+#send:disabled{opacity:.45;cursor:default}
+.swrap{display:flex;gap:10px;margin-bottom:16px}
+#sq{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;color:var(--txt);font:inherit;outline:none}
+#sq:focus{border-color:#2b6f8f}
+.sres{display:grid;gap:12px}
+.scard{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 17px;cursor:pointer;transition:border-color .15s}
+.scard:hover{border-color:#2b6f8f}
+.scard b{color:var(--a1);font-weight:600;font-size:14.5px}
+.scard p{font-size:13.5px;color:var(--dim);margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.card .ic{font-size:22px;margin-bottom:10px}
+.card b{font-size:15px}
+.card p{font-size:13.5px;color:var(--dim);margin-top:6px}
+.warn{margin-top:18px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.35);border-radius:13px;padding:14px 18px;font-size:13.5px;color:var(--dim)}
+footer{border-top:1px solid var(--line);padding:22px;text-align:center;font-size:13px;color:var(--dim)}
+</style></head>
+<body>
+<header>
+  <div class="logo">😈</div>
+  <div class="brand"><b><em>Devilish AI</em> · open source</b><div class="sub" id="stat"><span id="dot"></span>Connecting…</div></div>
+  <nav><a href="#consult">Chat</a><a href="#about">About</a><a href="https://github.com/60734-Hub/devilish-ai" target="_blank" rel="noopener">GitHub</a><a href="/login" style="color:var(--a1);font-weight:600">Sign in / Join</a></nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="kicker">Open source · free with an account · no limits</div>
+  <h1>The devilish AI,<br><em>unlimited and free</em></h1>
+  <p class="lead">Devilish AI chats about anything, answers with attitude, and never asks for a credit card. Create a free account and talk as much as you want.</p>
+  <div class="cta"><button class="btn p" onclick="document.getElementById('in').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>document.getElementById('in').focus(),600)">Start consulting</button></div>
+  <div class="stats">
+    <div class="stat"><b>70B</b><span>AI cloud brain</span></div>
+    <div class="stat"><b>&#8734;</b><span>Unlimited chat</span></div>
+    <div class="stat"><b>0</b><span>Dollars, ever</span></div>
+    <div class="stat"><b>24/7</b><span>Always awake</span></div>
+  </div>
+</section>
+
+<section id="consult">
+  <h3 class="sec">Summon the devil</h3>
+  <p class="secd">Ask anything. The devil answers fast, blunt and free.</p>
+  <div class="chatbox">
+    <div id="chat"></div>
+    <div class="chips" id="sugg"></div>
+    <div class="inbar">
+      <textarea id="in" rows="1" placeholder="Ask the devil anything…"></textarea>
+      <button id="send">Send</button>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="about">
+  <h3 class="sec">About</h3>
+  <p class="secd">What this is.</p>
+  <div class="grid">
+    <div class="card"><div class="ic">😈</div><b>Devilish by design</b><p>Blunt, witty and sharp-tongued, but genuinely helpful. It answers anything you throw at it.</p></div>
+    <div class="card"><div class="ic">🆓</div><b>Free forever</b><p>Unlimited chat for every account. No premium tier, no trial, no credit card. Money comes later, only if the people ask for it.</p></div>
+    <div class="card"><div class="ic">📖</div><b>Open source</b><p>The full code is public on GitHub. Read it, fork it, run your own copy.</p></div>
+    <div class="card"><div class="ic">🛠️</div><b>Built by Abdel Rahman Abuzaid</b><p>Created and operated by Abdel Rahman Abuzaid. His Instagram: <a href="https://instagram.com/Oculoplasty.Facelifter" target="_blank" rel="noopener">@Oculoplasty.Facelifter</a></p></div>
+  </div>
+</section>
+
+<footer><div>Devilish AI · open source · built by Abdel Rahman Abuzaid</div><div style="margin-top:6px;font-size:12px"><a href="https://github.com/60734-Hub/devilish-ai" target="_blank" rel="noopener">GitHub</a> · <a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="https://instagram.com/Oculoplasty.Facelifter" target="_blank" rel="noopener">@Oculoplasty.Facelifter</a></div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const chat=$('chat'),inp=$('in'),send=$('send'),stat=$('stat'),dot=$('dot'),sugg=$('sugg'),sres=$('sres')||document.createElement('div');
+let history=[];
+let clientId=localStorage.getItem('paolo_cid');if(!clientId){clientId='c'+Math.random().toString(36).slice(2,14);localStorage.setItem('paolo_cid',clientId);}
+let pcode='';
+const SUGG=['Explain black holes like a heist movie','Roast my startup idea: rubber keyboards','Write a devilishly persuasive apology','Plan a 3-day trip to Petra on $100'];
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function md(t){
+  let h=esc(t);
+  h=h.replace(/^#{1,6}\s?(.+)$/gm,'<h4>$1</h4>');
+  h=h.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  const lines=h.split('\n');let out='',list=null;
+  for(const ln of lines){
+    const ul=ln.match(/^\s*[-•]\s+(.*)/),ol=ln.match(/^\s*(\d+)[.)]\s+(.*)/);
+    if(ul){if(!list||list!=='ul'){if(list)out+='</'+list+'>';out+='<ul>';list='ul';}out+='<li>'+ul[1]+'</li>';}
+    else if(ol){if(!list||list!=='ol'){if(list)out+='</'+list+'>';out+='<ol>';list='ol';}out+='<li>'+ol[2]+'</li>';}
+    else{if(list){out+='</'+list+'>';list=null;}if(ln.trim())out+='<p>'+ln+'</p>';}
+  }
+  if(list)out+='</'+list+'>';
+  return out;
+}
+function add(role,html){
+  const m=document.createElement('div');m.className='msg '+(role==='u'?'u':'a');
+  const av=document.createElement('div');av.className='av';av.textContent=role==='u'?'👤':'⚡';
+  const b=document.createElement('div');b.className='bubble';
+  const w=document.createElement('div');w.className='md';w.innerHTML=html;b.appendChild(w);
+  m.appendChild(av);m.appendChild(b);chat.appendChild(m);chat.scrollTop=chat.scrollHeight;return w;
+}
+function paywall(reason){}
+async function go(){
+  const q=inp.value.trim();if(!q)return;
+  inp.value='';inp.style.height='auto';send.disabled=true;add('u',esc(q));
+  history.push({role:'user',content:q});
+  const t=add('a','<span class="typo"><span></span><span></span><span></span></span>');
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history.slice(-12),clientId:clientId})});
+    const j=await r.json();
+    if(r.status===429||r.status===401){history.pop();t.innerHTML=md(j.reply||'Create a free account to chat.');send.disabled=false;return;}
+    if(j.error)throw new Error(j.error);
+    history.push({role:'assistant',content:j.reply});
+    t.innerHTML=md(j.reply);
+  }catch(e){t.innerHTML=md('Network or server error: '+e.message);}
+  send.disabled=false;inp.focus();
+}
+send.onclick=go;
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();go();}});
+inp.addEventListener('input',()=>{inp.style.height='auto';inp.style.height=Math.min(inp.scrollHeight,160)+'px';});
+for(const s of SUGG){const c=document.createElement('div');c.className='chip';c.textContent=s;c.onclick=()=>{inp.value=s;go();};sugg.appendChild(c);}
+
+fetch('/api/health').then(r=>r.json()).then(j=>{
+  dot.classList.add('on');
+  stat.innerHTML='<span id="dot" class="on"></span>'+(j.llm?'Devilish AI online · live brain':'Devilish AI online');
+}).catch(()=>{stat.textContent='Devilish AI offline';});
+add('a',md('Welcome. I am the Devilish AI — ask me anything, any topic, no limits, no credit card. Sign in with a free account and let\'s talk.'));
+inp.focus();
+</script>
+</body></html>
